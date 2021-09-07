@@ -1,0 +1,659 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Adversarial attacks and defenses</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h3>Adversarial machine learning</h3>
+				</section>
+
+				<section>
+					<h4>Standard ML</h4>
+
+					<p>Samples are <i>independent</i> and <i>identically distributed</i> (i.i.d.)</p>
+					<p class="fragment">
+						<img src="img/iid.png">
+					</p>
+				</section>
+
+				<section>
+					<h4>Standard ML</h4>
+
+					<img src="img/vapnik.jpg">
+				</section>
+
+				<section>
+					<h4>Standard ML</h4>
+
+					<p>Impressive results in the i.i.d. setting since ~2013</p>
+					<p class="fragment">
+						<img src="img/ilsvrc.png">
+					</p>
+				</section>
+
+				<section>
+					<h4>Caveat</h4>
+
+					<p>Assumption of i.i.d. data can be violated when the model is deployed!</p>
+				</section>
+
+				<section>
+					<h4>Unusual samples</h4>
+
+					<p><img src="img/unusual.png"></p>
+					<p class="fragment">"basketball"</p>
+				</section>
+
+				<section>
+					<h4>Representation bias</h4>
+
+					<p>Data sets are often amerocentric and eurocentric</p>
+					<p class="fragment"><img src="img/geo.png" height="400"></p>
+				</section>
+
+				<section>
+					<h4>Representation bias</h4>
+					<p><img src="img/bridegroom.png" height="500"></p>
+				</section>
+
+				<section>
+					<h4>Malicious adversaries</h4>
+
+					<img src="img/attacks.png">
+				</section>
+
+				<section>
+					<h4>Spam filtering</h4>
+
+					<img src="img/spam.png">
+				</section>
+
+				<section>
+					<h4>Spam filtering</h4>
+
+					<img src="img/spam2.png">
+				</section>
+
+				<section>
+					<h4>Other scenarios</h4>
+
+					<p>Malware detection (e.g. malicious PDFs, MalConv)</p>
+					<p class="fragment">Biometric security systems</p>
+					<p class="fragment">Automatic content filtering (e.g. YouTube)</p>
+				</section>
+
+				<section>
+					<h4>Adversarial examples</h4>
+					<p>Type of evasion attack</p>
+					<p class="fragment">What is the smallest modification to a "natural" sample that causes the model to make a mistake?</p>
+				</section>
+
+				<section>
+					<h4>Adversarial examples</h4>
+
+					<p><strong>Typical formalization.</strong> An input $\tilde{x}$ is <i>adversarial</i> for a sample $(x, y)$ and model $f$ if</p>
+					<ul>
+						<li class="fragment">$f(x) = y$;</li>
+						<li class="fragment">$f(\tilde{x}) \neq y$;</li>
+						<li class="fragment">$d(x, \tilde{x}) \leq \varepsilon$</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Adversarial attacks</h3>
+
+					<p>How to create adversarial examples</p>
+				</section>
+
+				<section>
+					<h4>Threat model</h4>
+
+					<img src="img/threat.png">
+				</section>
+
+				<section>
+					<h4>Kerckhoffs's principle</h4>
+
+					<blockquote>
+						A cryptosystem should be secure even if everything about the system, except the key, is public knowledge.
+					</blockquote>
+				</section>
+
+				<section>
+					<h4>Threat model</h4>
+
+					<p>Most attacks assume knowledge of the model and data set</p>
+				</section>
+
+				<section>
+					<h4>L-BFGS attack</h4>
+
+					<p>Minimize $c\|\delta\| + L(x + \delta, y, f)$</p>
+
+					<p class="fragment">Straightforward but inefficient</p>
+				</section>
+				
+				<section>
+					<h4>L-BFGS attack</h4>
+					<img src="img/ostrich.png">
+					<p class="fragment">"ostrich" instead of "school bus"</p>
+				</section>
+
+				<section>
+					<h4>Fast gradient sign attack</h4>
+
+					<p>We wish to maximize $L(x + \delta, y, f)$.</p>
+
+					<p class="fragment">
+						<strong>Idea.</strong> First-order Taylor expansion:
+						$$
+							L(x + \delta, y, f) \approx L(x, y, f) + \langle \nabla_xL(x, y, f), \delta \rangle.
+						$$
+					</p>
+
+					<p class="fragment">
+						Let $\delta = \varepsilon\mathrm{sign}(\nabla_xL(x, y, f))$. Then $\|\delta\|_\infty = \varepsilon$ and
+						$$
+							L(x + \delta, y, f) \approx L(x, y, f) + \varepsilon\|\nabla_xL(x, y, f)\|_1.
+						$$
+					</p>
+				</section>
+
+				<section>
+					<h4>Fast gradient sign attack</h4>
+
+					<p>
+						$$
+							\tilde{x} = x + \varepsilon\mathrm{sign}(\nabla_xL(x, y, f)).
+						$$
+					</p>
+
+					<p class="fragment">Very fast</p>
+					<p class="fragment">Requires access to the gradients of the loss</p>
+				</section>
+
+				<section>
+					<h4>Fast gradient sign attack</h4>
+					<img src="img/fgs.png">
+				</section>
+
+				<section>
+					<h4>PGD attack</h4>
+
+					<p>
+						Let $\tilde{x}_0 \gets x$ and iterate:
+						$$
+							\tilde{x}_{t+1} \gets \Pi_S(\tilde{x}_t + \varepsilon\mathrm{sign}(\nabla_xL(x, y, f))
+						$$
+					</p>
+
+					<p class="fragment">Essentially multi-step FGSM with projection</p>
+					<p class="fragment">Very strong but slow (requiring high number of iterations)</p>
+				</section>
+
+				<section>
+					<h4>Carlini-Wagner attack</h4>
+
+					<p>
+						General objective:
+						$$
+							\min_\delta~d(x, x + \delta) + cg(x + \delta).
+						$$
+					</p>
+
+					<p class="fragment">
+						Specific choice for $g$:
+						$$
+							g(x^\prime) = \max\left\{ \max_{i \neq t}~Z_i(x^\prime) - Z_t(x^\prime) - \beta, 0 \right\}.
+						$$
+					</p>
+					
+					<p class="fragment">
+						Very powerful but very slow
+					</p>
+				</section>
+
+				<section>
+					<h4>Carlini-Wagner attack</h4>
+
+					<img src="img/cw.png">
+				</section>
+
+				<section>
+					<h4>Transfer attacks</h4>
+					<p>Attack one model and test generated adversarials on another</p>
+					<p class="fragment">Useful if target model is unknown</p>
+					<p class="fragment">Very effective!</p>
+				</section>
+
+				<section>
+					<h4>Transfer attacks</h4>
+					<p><img src="img/transfer.png"></p>
+				</section>
+
+				<section>
+					<h4>Image transformations</h4>
+					<img src="img/rotate.png">
+				</section>
+
+				<section>
+					<h4>Adversarial examples IRL</h4>
+					<p><img src="img/stop.png"></p>
+					<p class="fragment">"speed limit" instead of "stop sign"</p>
+				</section>
+
+				<section>
+					<h4>Adversarial examples IRL</h4>
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/i1sp4X57TL4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				</section>
+
+				<section>
+					<h4>Adversarial examples IRL</h4>
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/YXy6oX1iNoA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				</section>
+
+				<section>
+					<h4>Adversarial examples IRL</h4>
+
+					<img src="img/mask.png" width="50%">
+				</section>
+
+				<section>
+					<h4>Adversarial examples for text</h4>
+
+					<img src="img/hotflip1.png">
+				</section>
+
+				<section>
+					<h4>Adversarial examples for text</h4>
+
+					<img src="img/hotflip2.png">
+				</section>
+
+				<section>
+					<h4>Adversarial examples for audio</h4>
+
+					<img src="img/audio.png">
+				</section>
+
+				<section>
+					<h4>Misleading interpretability techniques</h4>
+
+					<img src="img/interpret.png">
+				</section>
+
+				<section>
+					<h3>Adversarial defenses</h3>
+					
+					<p>How to cope with adversarial examples</p>
+				</section>
+
+				<section>
+					<h4>Adversarial defenses</h4>
+
+					<ul>
+						<li><strong>Denoising.</strong> Remove the adversarial noise from the samples.</li>
+						<li class="fragment"><strong>Detection.</strong> Detect the presence of adversarial noise.</li>
+						<li class="fragment"><strong>Hardening.</strong> Make the model immune to adversarial noise.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h4>Adversarial defenses</h4>
+
+					<ul>
+						<li><strong>Certified.</strong> Mathematical proof that no $\delta$ with $\|\delta\| \leq \varepsilon$ will fool the model.</li>
+						<li class="fragment"><strong>Uncertified.</strong> No such guarantees; only empirical evidence.</li>
+					</ul>
+
+					<p class="fragment">Certified defenses are preferred, but more difficult to handle</p>
+				</section>
+
+				<section>
+					<h4>Adversarial training</h4>
+					<p>Just train on the adversarial examples as well</p>
+					<p class="fragment">Uncertified but simple</p>
+					<p class="fragment">Effectiveness heavily depends on attack</p>
+				</section>
+
+				<section>
+					<h4>Robust optimization</h4>
+
+					<p>
+						Standard ML:
+						$$
+							\min_\theta~\mathbb{E}\left[ L(X, Y, \theta) \right].
+						$$
+					</p>
+
+					<p class="fragment">
+						Robust ML:
+						$$
+							\min_\theta~\mathbb{E}\left[ \max_\Delta L(X + \Delta, Y, \theta) \right].
+						$$
+					</p>
+				</section>
+
+				<section>
+					<h4>Robust optimization</h4>
+
+					<p>
+						<strong>Practical implementation.</strong> For each minibatch,
+						<ol>
+							<li class="fragment"><strong>Inner maximization.</strong> Use adversarial attacks to construct adversarial training samples.</li>
+							<li class="fragment"><strong>Outer minimization.</strong> Update model parameters using these worst-case samples.</li>
+						</ol>
+					</p>
+
+					<p class="fragment">Can be certified sometimes</p>
+				</section>
+
+				<section>
+					<h4>Randomized smoothing</h4>
+
+					$$\begin{aligned}
+						g(x) &= \mathrm{argmax}_y~\Pr[f(x + \eta) = y]\\
+						&\mbox{ where }\eta \sim \mathcal{N}(0, \sigma^2I).
+					\end{aligned}$$
+
+					<p class="fragment">
+						Certified robustness radius:
+						$$
+							R = \frac{\sigma}{2}\left( \Phi^{-1}(p_A) - \Phi^{-1}(p_B) \right).
+						$$
+					</p>
+				</section>
+
+				<section>
+					<h4>Randomized smoothing</h4>
+
+					<img src="img/rs.png">
+				</section>
+
+				<section>
+					<h4>Game theory</h4>
+
+					<p><strong>Stackelberg game.</strong> Attacker $A$ and defender $D$ solve intertwined optimization problems:
+					$$\begin{aligned}
+						R_A(u) &= \mathrm{argmax}_{v \in V}~J_A(u, v),\\
+						R_D(v) &= \mathrm{argmax}_{u \in U}~J_D(u, v).
+					\end{aligned}$$</p>
+				</section>
+
+				<section>
+					<h4>Arms race</h4>
+
+					<img src="img/race.png">
+				</section>
+
+				<section>
+					<h4>Arms race</h4>
+
+					<p>Researchers have tried <strong>a lot</strong> of approaches for defense</p>
+
+					<p class="fragment">
+						Every defense proposed thus far has been broken
+						<ul>
+							<li class="fragment">... by more powerful attacks</li>
+							<li class="fragment">... due to researchers' own oversights</li>
+						</ul>
+					</p>
+				</section>
+
+				<section>
+					<h4>Schneier's Law</h4>
+
+					<p>
+						<blockquote>
+							Any person can invent a security system so clever that they themselves can't think of how to break it.
+						</blockquote>
+					</p>
+				</section>
+
+				<section>
+					<h4>Theoretical results</h4>
+
+					<p>Fundamental theoretical understanding of adversarial examples</p>
+				</section>
+
+				<section>
+					<h4>No free lunch</h4>
+
+					<p>No non-trivial concept class can be robustly learned in the distribution-free setting against an adversary who can perturb a single input bit.</p>
+				</section>
+
+				<section>
+					<h4>Sample complexity</h4>
+
+					<p>Robust learning, when possible, can require exponentially more samples than standard learning</p>
+				</section>
+
+				<section>
+					<h4>Optimal transport</h4>
+
+					<img src="img/transport.png">
+				</section>
+
+				<section>
+					<h4>Optimal transport</h4>
+
+					<p>
+						Probability measures $\mu$ and $\nu$ over a metric space $(X,d)$.
+					</p>
+					
+					<p class="fragment">
+						Cost function:
+						
+						$$
+							c_\varepsilon(x,y) = \mathcal{I}[d(x,y) > 2\varepsilon]
+						$$
+					</p>
+					
+					<p class="fragment">
+						Optimal transport cost:
+
+						$$
+							D_\varepsilon(\mu, \nu) = \inf_{\pi \in \Pi(\mu, \nu)}~\mathbb{E}_{(x,x^\prime) \sim \pi}[c_\varepsilon(x, x^\prime)].
+						$$
+					</p>
+				</section>
+
+				<section>
+					<h4>Optimal transport</h4>
+
+					<p>
+						<strong>Theorem.</strong> The minimal robust risk is
+						$$
+							\frac{1}{2}\left(1 - D_\varepsilon(p_0, p_1)\right).
+						$$
+					</p>
+				</section>
+
+				<section>
+					<h4>Robustness vs accuracy</h4>
+
+					<p>Robust accuracy can be at odds with standard accuracy</p>
+				</section>
+
+				<section>
+					<h4>Robustness vs accuracy</h4>
+
+					<p>
+						$$
+							y = \begin{cases}
+								+1 & \text{wp 50%,}\\
+								-1 & \text{wp 50%.}
+							\end{cases}
+						$$
+					</p>
+
+					<p class="fragment">
+						$$
+						x_1 = \begin{cases}
+							+y & \text{wp }p,\\
+							-y & \text{wp }1-p.
+						\end{cases}
+						$$
+					</p>
+
+					<p class="fragment">$x_2, \dots, x_{d+1} \sim \mathcal{N}(\eta y, 1)$</p>
+				</section>
+
+				<section>
+					<h4>Robustness vs accuracy</h4>
+
+					<p>Basically, the label $y$ is $+1$ or $-1$ uniformly at random, $x_1$ is moderately correlated with $y$ (via $p$) and $x_2, \dots, x_{d+1}$ are weakly correlated with $y$ (for large $\eta$).</p>
+				</section>
+
+				<section>
+					<h4>Robustness vs accuracy</h4>
+
+					<p>
+						<strong>Standard classification.</strong> Easy:
+						$$
+							f(x) = \mathrm{sign}(\langle w, x \rangle)
+						$$
+						where
+						$$
+							w = \left(0, \frac{1}{d}, \dots, \frac{1}{d} \right).
+						$$
+					</p>
+
+					<p class="fragment">Arbitrarily accurate for $d \to \infty$</p>
+				</section>
+
+				<section>
+					<h4>Robustness vs accuracy</h4>
+
+					<p><strong>Theorem.</strong> Any classifier that attains at least $1-\delta$ standard accuracy has robust accuracy at most $\frac{p}{1-p}\delta$ against an $\ell_\infty$-bounded adversary with $\varepsilon \geq 2\eta$.</p>
+
+					<p class="fragment"><strong>Corollary.</strong> For $p < 1$, 100% standard accuracy implies 0% robust accuracy!</p>
+				</section>
+
+				<section>
+					<h4>Brittle features</h4>
+
+					<p>
+						<ul>
+							<li>$\mathcal{D}$: standard training set</li>
+							<li class="fragment">$\mathcal{D}_R$: "robust" training set</li>
+							<li class="fragment">$\mathcal{D}_{NR}$: "non-robust" training set</li>
+						</ul>
+					</p>
+				</section>
+
+				<section>
+					<h4>Brittle features</h4>
+
+					<img src="img/brittle.png">
+				</section>
+
+				<section>
+					<h4>Brittle features</h4>
+
+					<p>Labels of $\mathcal{D}_{NR}$ look wrong</p>
+					<p class="fragment">Samples of $\mathcal{D}_R$ look wrong</p>
+					<p class="fragment">Training on $\mathcal{D}$ yields the same results as training on $\mathcal{D}_{NR}$!</p>
+					<p class="fragment">Training on $\mathcal{D}_R$ yields robust, accurate model!</p>
+				</section>
+
+				<section>
+					<h4>Brittle features</h4>
+
+					<p><strong>Hypothesis.</strong> Data sets contain brittle features which generalize to the test set but do not withstand adversarial attacks.</p>
+					<p class="fragment">Standard models include these brittle features because they maximize test accuracy at all costs</p>
+				</section>
+
+				<section>
+					<h3>Conclusions</h3>
+				</section>
+
+				<section>
+					<h4>Conclusions</h4>
+
+					<p>Adversarial ML is fundamentally <strong>interdisciplinary</strong></p>
+					<p class="fragment">ML + cybersecurity + game theory + ...</p>
+				</section>
+
+				<section>
+					<h4>Conclusions</h4>
+					<p>Small additive perturbations are a toy problem</p>
+					<p class="fragment">Generalizing beyond this toy problem is hard</p>
+					<p class="fragment">The toy problem itself is already very hard!</p>
+					<p class="fragment">Too much focus on the image domain</p>
+				
+				</section>
+
+				<section>
+					<h4>Conclusions</h4>
+					<p>We have some deep theoretical results</p>
+				</section>
+
+				<section>
+					<h4>Links</h4>
+
+					<ul>
+						<li><a href="https://adversarial-ml-tutorial.org/">Adversarial ML tutorial</a></li>
+						<li><a href="https://www.robust-ml.org/">RobustML</a></li>
+						<li><a href="https://nicholas.carlini.com/">Nicholas Carlini's blog</a></li>
+						<li><a href="http://madry-lab.ml/">Madry Lab</a></li>
+					</ul>
+				</section>
+
+				<section>
+					<h4>Links</h4>
+
+					<ul>
+						<li><a href="https://foolbox.readthedocs.io/en/stable/">Foolbox</a></li>
+						<li><a href="https://github.com/tensorflow/cleverhans">CleverHans</a></li>
+						<li><a href="https://adversarial-robustness-toolbox.org/">Adversarial robustness toolbox</a></li>
+						<li><a href="https://github.com/MadryLab/robustness">Madry Lab robustness package</a></li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				transition: 'none',
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+		<script src="plugin/math/math.js"></script>
+		<script>
+		  Reveal.initialize({
+			math: {
+			  mathjax: 'https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js',
+			  config: 'TeX-AMS_HTML-full',
+			  // pass other options into `MathJax.Hub.Config()`
+			  TeX: { Macros: { RR: "{\\bf R}" } }
+			},
+			plugins: [ RevealMath ]
+		  });
+		</script>
+	</body>
+</html>
