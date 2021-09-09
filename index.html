@@ -290,9 +290,22 @@
 				</section>
 
 				<section>
+					<h4>Adversarial examples for audio</h4>
+
+					<a href="https://cseweb.ucsd.edu//~yaq007/imperceptible-robust-adv.html" target="_blank">Examples</a>
+				</section>
+
+				<section>
 					<h4>Misleading interpretability techniques</h4>
 
 					<img src="img/interpret.png">
+				</section>
+
+				<section>
+					<h4>Beyond simple perturbations</h4>
+
+					<p>Simple additive norm-bounded perturbations are a toy problem!</p>
+					<p class="fragment">Some work has used generative models for more sophisticated attacks, such as <a href="https://arxiv.org/pdf/2006.16241.pdf">DeepAugment</a></p>
 				</section>
 
 				<section>
@@ -394,6 +407,19 @@
 				</section>
 
 				<section>
+					<h4>Other tricks</h4>
+
+					<p>Many small tricks can add up to significantly higher robustness!</p>
+					<p class="fragment"><a href="https://arxiv.org/pdf/2103.01946.pdf">Rebuffi et al. (2021)</a>: model weight averaging + clever data augmentations</p>
+				</section>
+
+				<section>
+					<h4>Other tricks</h4>
+
+					<img src="img/wa.png">
+				</section>
+
+				<section>
 					<h4>Arms race</h4>
 
 					<img src="img/race.png">
@@ -405,11 +431,15 @@
 					<p>Researchers have tried <strong>a lot</strong> of approaches for defense</p>
 
 					<p class="fragment">
-						Every defense proposed thus far has been broken
+						Almost every defense proposed thus far has been broken
 						<ul>
 							<li class="fragment">... by more powerful attacks</li>
 							<li class="fragment">... due to researchers' own oversights</li>
 						</ul>
+					</p>
+
+					<p class="fragment">
+						See e.g. <a href="https://nicholas.carlini.com/papers/2020_neurips_adaptiveattacks.pdf">Tramer et al. (2020)</a>
 					</p>
 				</section>
 
@@ -433,12 +463,20 @@
 					<h4>No free lunch</h4>
 
 					<p>No non-trivial concept class can be robustly learned in the distribution-free setting against an adversary who can perturb a single input bit.</p>
+
+					<p class="fragment">
+						<a href="https://proceedings.neurips.cc/paper/2019/hash/8133415ea4647b6345849fb38311cf32-Abstract.html" target="_blank">Gourdeau et al. (2019)</a>
+					</p>
 				</section>
 
 				<section>
 					<h4>Sample complexity</h4>
 
 					<p>Robust learning, when possible, can require exponentially more samples than standard learning</p>
+
+					<p class="fragment">
+						<a href="https://arxiv.org/abs/1906.05815">Diochnos et al. (2019)</a>
+					</p>
 				</section>
 
 				<section>
@@ -475,7 +513,7 @@
 					<h4>Optimal transport</h4>
 
 					<p>
-						<strong>Theorem.</strong> The minimal robust risk is
+						<strong>Theorem (<a href="http://proceedings.mlr.press/v119/pydi20a/pydi20a.pdf" target="_blank">Pydi & Jog (2020)</a>).</strong> The minimal robust risk is
 						$$
 							\frac{1}{2}\left(1 - D_\varepsilon(p_0, p_1)\right).
 						$$
@@ -538,9 +576,21 @@
 				<section>
 					<h4>Robustness vs accuracy</h4>
 
-					<p><strong>Theorem.</strong> Any classifier that attains at least $1-\delta$ standard accuracy has robust accuracy at most $\frac{p}{1-p}\delta$ against an $\ell_\infty$-bounded adversary with $\varepsilon \geq 2\eta$.</p>
+					<p><strong>Theorem (<a href="https://arxiv.org/pdf/1805.12152.pdf">Tsipras et al. (2018)</a>).</strong> Any classifier that attains at least $1-\delta$ standard accuracy has robust accuracy at most $\frac{p}{1-p}\delta$ against an $\ell_\infty$-bounded adversary with $\varepsilon \geq 2\eta$.</p>
 
 					<p class="fragment"><strong>Corollary.</strong> For $p < 1$, 100% standard accuracy implies 0% robust accuracy!</p>
+				</section>
+
+				<section>
+					<h4>Robustness vs accuracy</h4>
+
+					<p><a href="https://arxiv.org/pdf/2003.02460.pdf">Yang et al. (2020)</a>: classes from real-world data sets are well-separated, so robustness should be achievable</p>
+				</section>
+
+				<section>
+					<h4>Robustness vs accuracy</h4>
+
+					<img src="img/separation.png">
 				</section>
 
 				<section>
@@ -573,8 +623,34 @@
 				<section>
 					<h4>Brittle features</h4>
 
-					<p><strong>Hypothesis.</strong> Data sets contain brittle features which generalize to the test set but do not withstand adversarial attacks.</p>
+					<p><strong>Hypothesis (<a href="https://arxiv.org/pdf/1905.02175.pdf">Ilyas et al. (2019)</a>).</strong> Data sets contain brittle features which generalize to the test set but do not withstand adversarial attacks.</p>
 					<p class="fragment">Standard models include these brittle features because they maximize test accuracy at all costs</p>
+				</section>
+
+				<section>
+					<h4>Invariance vs sensitivity</h4>
+
+					<p>
+						<img src="img/jacobsen.png">
+					</p>
+
+					<p><a href="https://arxiv.org/abs/1811.00401">Jacobsen et al. (2019)</a></p>
+				</section>
+
+				<section>
+					<h3>Don't panic!</h3>
+				</section>
+
+				<section>
+					<h4>Don't panic!</h4>
+
+					<img src="img/knock.png">
+				</section>
+
+				<section>
+					<h4>Don't panic!</h4>
+
+					<p><a href="https://arxiv.org/pdf/1807.06732.pdf">Gilmer et al. (2018)</a>: adversarial perturbations are rarely an actual security concern</p>
 				</section>
 
 				<section>
@@ -586,6 +662,7 @@
 
 					<p>Adversarial ML is fundamentally <strong>interdisciplinary</strong></p>
 					<p class="fragment">ML + cybersecurity + game theory + ...</p>
+					<p class="fragment">Rarely a real security concern...</p>
 				</section>
 
 				<section>
@@ -607,7 +684,7 @@
 
 					<ul>
 						<li><a href="https://adversarial-ml-tutorial.org/">Adversarial ML tutorial</a></li>
-						<li><a href="https://www.robust-ml.org/">RobustML</a></li>
+						<li><a href="https://robustbench.github.io">RobustBench</a></li>
 						<li><a href="https://nicholas.carlini.com/">Nicholas Carlini's blog</a></li>
 						<li><a href="http://madry-lab.ml/">Madry Lab</a></li>
 					</ul>
@@ -617,6 +694,7 @@
 					<h4>Links</h4>
 
 					<ul>
+						<li><a href="https://github.com/fra31/auto-attack">AutoAttack</a></li>
 						<li><a href="https://foolbox.readthedocs.io/en/stable/">Foolbox</a></li>
 						<li><a href="https://github.com/tensorflow/cleverhans">CleverHans</a></li>
 						<li><a href="https://adversarial-robustness-toolbox.org/">Adversarial robustness toolbox</a></li>
