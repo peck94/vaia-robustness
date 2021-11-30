@@ -159,12 +159,36 @@
 				<section>
 					<h4>Threat model</h4>
 
-					<p>Most attacks assume knowledge of the model and data set</p>
-					<p class="fragment">
+					<p>
 						$L_p$ threat model:
 						$$
 							d(x, \tilde{x}) = \|x - \tilde{x}\|_p \leq \varepsilon
 						$$
+					</p>
+				</section>
+
+				<section>
+					<h4>Threat model</h4>
+
+					<p>
+						Taxonomy of attacks:
+						<ul>
+							<li class="fragment">
+								White-box
+								<ul>
+									<li class="fragment">gradient-based</li>
+									<li class="fragment">gradient-free</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Black-box
+								<ul>
+									<li class="fragment">surrogate-based</li>
+									<li class="fragment">score-based</li>
+									<li class="fragment">decision-based</li>
+								</ul>
+							</li>
+						</ul>
 					</p>
 				</section>
 
