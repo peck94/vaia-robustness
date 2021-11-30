@@ -69,6 +69,12 @@
 				</section>
 
 				<section>
+					<h4>Standard ML</h4>
+
+					<img src="img/model_comparison.png" width="60%">
+				</section>
+
+				<section>
 					<h4>Caveat</h4>
 
 					<p>Assumption of i.i.d. data can be violated when the model is deployed!</p>
@@ -120,7 +126,7 @@
 				</section>
 
 				<section>
-					<h4>Adversarial examples</h4>
+					<h3>Adversarial examples</h3>
 					<p>Type of evasion attack</p>
 					<p class="fragment">What is the smallest modification to a "natural" sample that causes the model to make a mistake?</p>
 				</section>
@@ -134,6 +140,21 @@
 						<li class="fragment">$f(\tilde{x}) \neq y$;</li>
 						<li class="fragment">$d(x, \tilde{x}) \leq \varepsilon$</li>
 					</ul>
+				</section>
+
+				<section>
+					<h4>Adversarial examples</h4>
+
+					<p>
+						Practical optimization problem:
+						$$
+							\min_{\delta}~d(x, x + \delta)
+							\mbox{ subject to }
+							f(x) \neq f(x + \delta)
+						$$
+					</p>
+
+					<p class="fragment">Can reduce accuracy of SOTA models to 0% for very small $\delta$!</p>
 				</section>
 
 				<section>
@@ -446,6 +467,8 @@
 						</ol>
 					</p>
 
+					<p class="fragment">Typically uses PGD</p>
+
 					<p class="fragment">
 						Can be certified sometimes
 						(<a href="https://arxiv.org/abs/1710.10571">Sinha et al. (2017)</a>,
@@ -504,6 +527,52 @@
 					<h4>Other tricks</h4>
 
 					<img src="img/wa.png">
+				</section>
+
+				<section>
+					<h4>SOTA summary</h4>
+
+					<p>
+						<table>
+							<tr>
+								<th>Data</th>
+								<th>Threat</th>
+								<th>Standard</th>
+								<th>Robust</th>
+							</tr>
+							<tr>
+								<td>MNIST</td>
+								<td>$L_{\infty} \leq 0.1$</td>
+								<td>98.81%</td>
+								<td>96.37%</td>
+							</tr>
+							<tr>
+								<td>CIFAR-10</td>
+								<td>$L_2 \leq 0.5$</td>
+								<td>95.74%</td>
+								<td>82.32%</td>
+							</tr>
+							<tr>
+								<td>CIFAR-10</td>
+								<td>$L_{\infty} \leq 8/255$</td>
+								<td>92.23%</td>
+								<td>66.56%</td>
+							</tr>
+							<tr>
+								<td>ImageNet</td>
+								<td>$L_{\infty} \leq 4/255$</td>
+								<td>68.46%</td>
+								<td>38.14%</td>
+							</tr>
+						</table>
+					</p>
+				</section>
+
+				<section>
+					<h4>SOTA summary</h4>
+
+					<p>Robustness to one threat model (e.g. $L_2$) does not transfer to others (e.g. $L_{\infty}$)</p>
+					<p class="fragment">Standard accuracy is often significantly lower than non-robust model</p>
 				</section>
 
 				<section>
@@ -705,6 +774,8 @@
 					<h4>Robustness vs accuracy</h4>
 
 					<p><a href="https://arxiv.org/pdf/2003.02460.pdf">Yang et al. (2020)</a>: classes from real-world data sets are well-separated, so robustness should be achievable</p>
+					<p class="fragment">So why haven't we achieved it?</p>
+					<p class="fragment">Probably some form of overfitting...</p>
 				</section>
 
 				<section>
