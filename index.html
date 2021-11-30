@@ -298,6 +298,16 @@
 				</section>
 
 				<section>
+					<h4>Universal adversarial perturbations</h4>
+					<img src="img/uap.png" width="40%">
+				</section>
+
+				<section>
+					<h4>One-pixel attack</h4>
+					<img src="img/one_pixel.png">
+				</section>
+
+				<section>
 					<h4>Image transformations</h4>
 					<img src="img/rotate.png">
 				</section>
@@ -529,7 +539,44 @@
 				<section>
 					<h3>Theoretical results</h3>
 
-					<p>Fundamental theoretical understanding of adversarial examples</p>
+					<p>Fundamental theoretical understanding of robustness</p>
+				</section>
+
+				<section>
+					<h4>Lipschitz networks</h4>
+
+					<p>
+						Lipschitz continuity:
+						$$
+							d(f(x), f(x^\prime)) \leq Kd(x, x^\prime)
+						$$
+					</p>
+
+					<p class="fragment">
+						Obviously useful for robustness, so much research interest
+					</p>
+
+					<p class="fragment">
+						Lipschitz constraint is very restrictive, however...
+					</p>
+				</section>
+
+				<section>
+					<h4>Lipschitz VAEs</h4>
+
+					<img src="img/lipvae.png">
+
+					<p><a href="https://arxiv.org/pdf/2102.07559.pdf">Barrett et al. (2021)</a></p>
+				</section>
+
+				<section>
+					<h4>Lipschitz VAEs</h4>
+
+					<p>
+						$$
+							\Pr[\|f(x) - f(\tilde{x})\|_2 \leq r] \geq 1 - \Theta\left(\frac{K\varepsilon^2}{r^2}\right).
+						$$
+					</p>
 				</section>
 
 				<section>
