@@ -878,30 +878,50 @@
 				<section>
 					<h4>Conclusions</h4>
 
-					<p>Attacking deep neural networks is very easy</p>
-					<p class="fragment">Defending them turns out to be very hard...</p>
+					<p>Adversarial robustness might <i>not</i> be worth it in practice</p>
+					<p class="fragment">Make sure there is a realistic threat model (<a href="https://arxiv.org/pdf/1807.06732.pdf">Gilmer et al. 2018</a>)</p>
+					<p class="fragment">Can't you compensate for adversarial examples in some other way?</p>
 				</section>
 
 				<section>
 					<h4>Conclusions</h4>
 
-					<p>Adversarial examples are rarely a real security concern</p>
-					<p class="fragment">But they call generalization ability into question</p>
+					<p>Avoid creating your own defense</p>
+					<p class="fragment">Stick to tried-and-true published methods</p>
+					<p class="fragment">See <a href="https://github.com/RobustBench/robustbench">RobustBench</a></p>
 				</section>
 
 				<section>
 					<h4>Conclusions</h4>
 
-					<p>Small additive perturbations are a toy problem</p>
-					<p class="fragment">Very hard to generalize beyond it...</p>
+					<p>Adversarial training is the basic building block of most modern defenses</p>
+					<p class="fragment">Often in conjunction with clever data augmentation techniques (<a href="https://openreview.net/pdf?id=kgVJBBThdSZ">Rebuffi et al. 2021</a>)</p>
+					<p class="fragment">Don't forget to use early stopping against robust overfitting!</p>
 				</section>
 
 				<section>
 					<h4>Conclusions</h4>
 
-					<p>Much progress has definitely been made</p>
-					<p class="fragment">Practical robustness still lacking</p>
-					<p class="fragment">Likely no silver bullet...</p>
+					<p>Incorporating artificial data created by generative models also helps (<a href="https://openreview.net/pdf?id=0NXUSlb6oEu">Gowal et al. 2021</a>)</p>
+					<p class="fragment">Unlabeled data can also be used with self-training (<a href="https://github.com/yaircarmon/semisup-adv">Carmon et al. 2019</a>)</p>
+				</section>
+
+				<section>
+					<h4>Conclusions</h4>
+
+					<p>Use <a href="https://github.com/fra31/auto-attack">AutoAttack</a> to evaluate robustness</p>
+					<p class="fragment">Make sure to use randomized and plus versions</p>
+					<p class="fragment">Think about adaptive attacks (<a href="https://proceedings.neurips.cc/paper/2020/file/11f38f8ecd71867b42433548d1078e38-Paper.pdf">Trame&#768;r et al. 2020</a>)</p>
+				</section>
+
+				<section>
+					<h4>Conclusions</h4>
+
+					<p>Watch out for gradient masking</p>
+					<p class="fragment">Iterative attacks $\geq$ single-step attacks</p>
+					<p class="fragment">Higher attack budget $\implies$ better success rate</p>
+					<p class="fragment">Unbounded attacks should be 100% successful</p>
+					<p class="fragment">Random sampling should not perform better than adversarial attacks</p>
 				</section>
 
 				<section>
