@@ -491,7 +491,29 @@
 				<section>
 					<h4>Fast adversarial training</h4>
 
-					<p>TODO</p>
+					<p>PGD-based adversarial training is extremely slow</p>
+					<p class="fragment">FGS-based adversarial training doesn't work (<a href="https://arxiv.org/pdf/1611.01236.pdf">Kurakin et al. 2016</a>)</p>
+					<p class="fragment">... or does it?</p>
+				</section>
+
+				<section>
+					<h4>Fast adversarial training</h4>
+
+					<p>FGS-based adversarial training can work if implemented carefully (<a href="https://arxiv.org/pdf/2001.03994.pdf">Wong et al. 2020</a>)</p>
+				</section>
+
+				<section>
+					<h4>Fast adversarial training</h4>
+
+					<p>
+						Two modifications of FGS:
+						<ol>
+							<li class="fragment">apply random noise to the initial input</li>
+							<li class="fragment">use $1.25\varepsilon$ as the step size instead of $\varepsilon$</li>
+						</ol>
+					</p>
+
+					<p class="fragment">Results are competitive with PGD but just as fast as regular training!</p>
 				</section>
 
 				<section>
