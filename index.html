@@ -31,7 +31,7 @@
 
 						<div style="float: right; width: 50%">
 							<p>Jonathan Peck</p>
-							<p class="fragment">Ph.D. student @ UGent</p>
+							<p class="fragment">Post-doc @ UGent</p>
 							<p class="fragment">TWIST @ De Sterre</p>
 							<p class="fragment">DAMBI @ IRC</p>
 						</div>
@@ -134,6 +134,27 @@
 				<section>
 					<h4>Adversarial examples</h4>
 
+					<img src="img/ostrich.png">
+
+					<p><a href="https://arxiv.org/abs/1312.6199">Szegedy et al. (2013)</a></p>
+				</section>
+
+				<section>
+					<h4>Adversarial examples</h4>
+
+					<p>Already well-known in "classical" ML (<a href="https://dl.acm.org/doi/abs/10.1145/1081870.1081950">Lowd & Meek (2005)</a>)</p>
+
+					<p class="fragment">
+						Unexpected for DNNs due to the "smoothness prior" (<a href="https://ieeexplore.ieee.org/abstract/document/6472238">Bengio et al. (2013)</a>):
+						\[
+							x \approx x' \implies f(x) \approx f(x')
+						\]
+					</p>
+				</section>
+
+				<section>
+					<h4>Adversarial examples</h4>
+
 					<p><strong>Typical formalization.</strong> An input $\tilde{x}$ is <i>adversarial</i> for a sample $(x, y)$ and model $f$ if</p>
 					<ul>
 						<li class="fragment">$f(x) = y$;</li>
@@ -201,6 +222,14 @@
 				<section>
 					<h4>Threat model</h4>
 
+					<p>NLP: insertions, deletions and substitutions of tokens</p>
+
+					<img src="img/hotflip1.png">
+				</section>
+
+				<section>
+					<h4>Threat model</h4>
+
 					<p>
 						Taxonomy of attacks:
 						<ul>
@@ -234,6 +263,7 @@
 				<section>
 					<h4>L-BFGS attack</h4>
 					<img src="img/ostrich.png">
+					<p><a href="https://arxiv.org/abs/1312.6199">Szegedy et al. (2013)</a></p>
 				</section>
 
 				<section>
@@ -272,6 +302,7 @@
 				<section>
 					<h4>Fast gradient sign attack</h4>
 					<img src="img/fgs.png">
+					<p><a href="https://arxiv.org/abs/1412.6572">Goodfellow et al. (2014)</a></p>
 				</section>
 
 				<section>
@@ -293,48 +324,9 @@
 				</section>
 
 				<section>
-					<h4>Carlini-Wagner attack</h4>
-
-					<p>
-						General objective:
-						$$
-							\min_\delta~d(x, x + \delta) + cg(x + \delta).
-						$$
-					</p>
-
-					<p class="fragment">
-						Specific choice for $g$:
-						$$
-							g(x^\prime) = \max\left\{ \max_{i \neq t}~Z_i(x^\prime) - Z_t(x^\prime) - \beta, 0 \right\}.
-						$$
-					</p>
-					
-					<p class="fragment">
-						Very powerful but very slow
-					</p>
-				</section>
-
-				<section>
-					<h4>Carlini-Wagner attack</h4>
-
-					<img src="img/cw.png">
-				</section>
-
-				<section>
-					<h4>Transfer attacks</h4>
-					<p>Attack one model and test generated adversarials on another</p>
-					<p class="fragment">Useful if target model is unknown</p>
-					<p class="fragment">Very effective!</p>
-				</section>
-
-				<section>
-					<h4>Transfer attacks</h4>
-					<p><img src="img/transfer.png"></p>
-				</section>
-
-				<section>
-					<h4>Universal adversarial perturbations</h4>
-					<img src="img/uap.png" width="40%">
+					<h4>Surrogate black-box attacks</h4>
+					<p><img src="img/papernot.png"></p>
+					<p><a href="https://arxiv.org/abs/1602.02697">Papernot et al. (2016)</a></p>
 				</section>
 
 				<section>
@@ -345,6 +337,13 @@
 				<section>
 					<h4>Image transformations</h4>
 					<img src="img/rotate.png">
+				</section>
+
+				<section>
+					<h4>Universal adversarial perturbations</h4>
+					<img src="img/uap.png" height="400px">
+
+					<p><a href="https://arxiv.org/abs/1610.08401">Moosavi-Dezfooli et al. (2016)</a></p>
 				</section>
 
 				<section>
@@ -370,15 +369,59 @@
 				</section>
 
 				<section>
-					<h4>Adversarial examples for text</h4>
+					<h4>Adversarial examples for NLP</h4>
 
 					<img src="img/hotflip1.png">
 				</section>
 
 				<section>
-					<h4>Adversarial examples for text</h4>
+					<h4>Adversarial examples for NLP</h4>
 
 					<img src="img/hotflip2.png">
+				</section>
+
+				<section>
+					<h4>Universal trigger phrases</h4>
+					<img src="img/triggers.png">
+
+					<p><a href="https://aclanthology.org/D19-1221.pdf">Wallace et al. (2019)</a></p>
+				</section>
+
+				<section>
+					<h4>ChatGPT version 2023-01-09</h4>
+
+					<table>
+						<tr>
+							<td><input type="text" value="Prove that the square of 2 is irrational." style="width: 100%" readonly></td>
+						</tr>
+						<tr>
+							<td>
+								<textarea rows="20" cols="100" readonly>The proof that the square of 2 is irrational is a well-known proof, which can be shown by contradiction. If we assume that the square of 2 is rational, then it can be written in the form of a fraction, where the numerator and denominator are integers. Let's represent the square of 2 as a fraction, where a and b are integers and b is not equal to zero.
+	(2^2) = (a/b)
+Expanding the left side of the equation:
+	4 = (a/b)
+We can then multiply both sides of the equation by b:
+	4b = a
+Since a and b are integers, a must also be divisible by 4. So let's write a as 4x for some integer x:
+	4b = 4x
+Dividing both sides by 4:
+	b = x
+So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2 can be expressed as a ratio of integers. But this contradicts our assumption that the square of 2 is irrational. Therefore, the square of 2 is irrational.</textarea>
+							</td>
+						</tr>
+					</table>
+				</section>
+
+				<section>
+					<h4>Resume screening</h4>
+
+					<img src="img/vdab_orig.png">
+				</section>
+
+				<section>
+					<h4>Resume screening</h4>
+
+					<img src="img/vdab_adv.png">
 				</section>
 
 				<section>
