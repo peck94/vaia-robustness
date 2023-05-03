@@ -191,14 +191,6 @@
 				</section>
 
 				<section>
-					<h4>Kerckhoffs's principle</h4>
-
-					<blockquote>
-						A cryptosystem should be secure even if everything about the system, except the key, is public knowledge.
-					</blockquote>
-				</section>
-
-				<section>
 					<h4>Threat model</h4>
 
 					<p>
@@ -468,6 +460,14 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 				</section>
 
 				<section>
+					<h4>Kerckhoffs's principle</h4>
+
+					<blockquote>
+						A cryptosystem should be secure even if everything about the system, except the key, is public knowledge.
+					</blockquote>
+				</section>
+
+				<section>
 					<h4>Adversarial defenses</h4>
 
 					<ul>
@@ -596,6 +596,23 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 				</section>
 
 				<section>
+					<h4>Denoised smoothing</h4>
+
+					<p>Randomized smoothing lowers accuracy because of noise</p>
+
+					<p class="fragment">Simply add a denoiser!</p>
+
+					<p class="fragment">
+						$$\begin{aligned}
+							g(x) &= \mathrm{argmax}_y~\Pr[f(D(x + \eta)) = y]\\
+							&\mbox{ where }\eta \sim \mathcal{N}(0, \sigma^2I).
+						\end{aligned}$$
+
+						where $D$ is a denoising network
+					</p>
+				</section>
+
+				<section>
 					<h4>De-randomized smoothing</h4>
 
 					<img src="img/derandomized_smoothing.png">
@@ -621,6 +638,8 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 							<li class="fragment">artificial data from generative models (unsupervised!)</li>
 						</ul>
 					</p>
+
+					<p class="fragment">See also <a href="https://arxiv.org/abs/2302.04638">Wang et al. (2023)</a></p>
 				</section>
 
 				<section>
@@ -633,40 +652,38 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 								<th>Threat</th>
 								<th>Standard</th>
 								<th>Robust</th>
+								<th>Best</th>
 							</tr>
 							<tr>
-								<td>MNIST</td>
-								<td>$L_{\infty} \leq 0.1$</td>
-								<td>98.81%</td>
-								<td>96.37%</td>
-							</tr>
-							<tr>
-								<td>CIFAR-10</td>
+								<td rowspan="2">CIFAR-10</td>
 								<td>$L_2 \leq 0.5$</td>
-								<td>95.74%</td>
-								<td>82.32%</td>
+								<td>95.54%</td>
+								<td>84.97%</td>
+								<td rowspan="2">99.50%</td>
 							</tr>
 							<tr>
-								<td>CIFAR-10</td>
 								<td>$L_{\infty} \leq 8/255$</td>
-								<td>92.23%</td>
-								<td>66.56%</td>
+								<td>93.25%</td>
+								<td>70.69%</td>
+							</tr>
+							<tr>
+								<td>CIFAR-100</td>
+								<td>$L_{\infty} \leq 8/255$</td>
+								<td>75.22%</td>
+								<td>42.67%</td>
+								<td>96.08%</td>
 							</tr>
 							<tr>
 								<td>ImageNet</td>
 								<td>$L_{\infty} \leq 4/255$</td>
-								<td>68.46%</td>
-								<td>38.14%</td>
+								<td>73.76%</td>
+								<td>47.60%</td>
+								<td>91.10%</td>
 							</tr>
 						</table>
 					</p>
-				</section>
 
-				<section>
-					<h4>SOTA summary</h4>
-
-					<p>Robustness to one threat model (e.g. $L_2$) does not transfer to others (e.g. $L_{\infty}$)</p>
-					<p class="fragment">Standard accuracy is often significantly lower than non-robust model</p>
+					<p><a href="https://github.com/RobustBench/robustbench">RobustBench leaderboard</a></p>
 				</section>
 
 				<section>
@@ -779,47 +796,6 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 				</section>
 
 				<section>
-					<h4>Optimal transport</h4>
-
-					<img src="img/transport.png">
-				</section>
-
-				<section>
-					<h4>Optimal transport</h4>
-
-					<p>
-						Probability measures $\mu$ and $\nu$ over a metric space $(X,d)$.
-					</p>
-					
-					<p class="fragment">
-						Cost function:
-						
-						$$
-							c_\varepsilon(x,y) = \mathcal{I}[d(x,y) > 2\varepsilon]
-						$$
-					</p>
-					
-					<p class="fragment">
-						Optimal transport cost:
-
-						$$
-							D_\varepsilon(\mu, \nu) = \inf_{\pi \in \Pi(\mu, \nu)}~\mathbb{E}_{(x,x^\prime) \sim \pi}[c_\varepsilon(x, x^\prime)].
-						$$
-					</p>
-				</section>
-
-				<section>
-					<h4>Optimal transport</h4>
-
-					<p>
-						<strong>Theorem (<a href="http://proceedings.mlr.press/v119/pydi20a/pydi20a.pdf" target="_blank">Pydi & Jog (2020)</a>).</strong> The minimal robust risk is
-						$$
-							\frac{1}{2}\left(1 - D_\varepsilon(p_0, p_1)\right).
-						$$
-					</p>
-				</section>
-
-				<section>
 					<h4>Robustness vs accuracy</h4>
 
 					<p>Robust accuracy can be at odds with standard accuracy</p>
@@ -908,18 +884,6 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 				<section>
 					<h4>Brittle features</h4>
 
-					<p>
-						<ul>
-							<li>$\mathcal{D}$: standard training set</li>
-							<li class="fragment">$\mathcal{D}_R$: "robust" training set</li>
-							<li class="fragment">$\mathcal{D}_{NR}$: "non-robust" training set</li>
-						</ul>
-					</p>
-				</section>
-
-				<section>
-					<h4>Brittle features</h4>
-
 					<img src="img/brittle.png">
 				</section>
 
@@ -948,6 +912,34 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 
 					<p><a href="https://arxiv.org/abs/1811.00401">Jacobsen et al. (2019)</a></p>
 				</section>
+
+				<section>
+					<h3>Conclusions</h3>
+				</section>
+
+				<section>
+					<p>
+						Major open problems:
+						<ul>
+							<li class="fragment">
+								Robustness to one threat model (e.g. $L_2$) does not transfer well to others (e.g. $L_{\infty}$)
+							</li>
+
+							<li class="fragment">
+								Standard accuracy is often significantly lower than non-robust model
+							</li>
+
+							<li class="fragment">
+								Perturbation budgets are much smaller than we would like
+							</li>
+
+							<li class="fragment">
+								Difficult to move beyond the toy problem of small additive perturbations
+							</li>
+						</ul>
+					</p>
+				</section>
+
 				<section>
 					<h3>Don't panic!</h3>
 
@@ -959,10 +951,6 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 
 					<p><a href="https://arxiv.org/pdf/1807.06732.pdf">Gilmer et al. (2018)</a>: adversarial perturbations are rarely an actual security concern</p>
 					<p class="fragment">More of a <strong>generalization</strong> issue than a <strong>security</strong> problem...</p>
-				</section>
-
-				<section>
-					<h3>Conclusions</h3>
 				</section>
 
 				<section>
@@ -1016,25 +1004,34 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 				</section>
 
 				<section>
-					<h4>Links</h4>
+					<h4>Further reading</h4>
 
 					<ul>
 						<li><a href="https://adversarial-ml-tutorial.org/">Adversarial ML tutorial</a></li>
-						<li><a href="https://robustbench.github.io">RobustBench</a></li>
 						<li><a href="https://nicholas.carlini.com/">Nicholas Carlini's blog</a></li>
 						<li><a href="http://madry-lab.ml/">Madry Lab</a></li>
 					</ul>
 				</section>
 
 				<section>
-					<h4>Links</h4>
+					<h4>Frameworks</h4>
 
 					<ul>
+						<li><a href="https://adversarial-robustness-toolbox.org/">Adversarial robustness toolbox</a></li>
 						<li><a href="https://github.com/fra31/auto-attack">AutoAttack</a></li>
 						<li><a href="https://foolbox.readthedocs.io/en/stable/">Foolbox</a></li>
 						<li><a href="https://github.com/tensorflow/cleverhans">CleverHans</a></li>
-						<li><a href="https://adversarial-robustness-toolbox.org/">Adversarial robustness toolbox</a></li>
-						<li><a href="https://github.com/MadryLab/robustness">Madry Lab robustness package</a></li>
+						<li><a href="https://github.com/thu-ml/ares">ARES</a></li>
+					</ul>
+				</section>
+
+				<section>
+					<h4>Benchmarks</h4>
+
+					<ul>
+						<li><a href="https://robustbench.github.io">RobustBench</a></li>
+						<li><a href="http://robust.art/">RobustART</a></li>
+						<li><a href="https://ml.cs.tsinghua.edu.cn/ares-bench/#/leaderboard">ARES-Bench</a></li>
 					</ul>
 				</section>
 
