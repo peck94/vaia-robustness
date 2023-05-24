@@ -4,7 +4,7 @@ This repository contains the slides and notebook code I use for teaching about a
 
 ## Slides
 
-The slides are available in RevealJS format under the `slides/` directory. Simply open the `index.html` file or, preferably, run the server:
+The slides are available in [reveal.js](https://revealjs.com/) format under the `slides/` directory. Simply open the `index.html` file or, preferably, run the server:
 
 ```bash
 ~/vaia-robustness/slides$ python server.py 
