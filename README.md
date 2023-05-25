@@ -21,7 +21,7 @@ docker build . -t vaia-robustness
 docker run -p 8888:8888 --gpus=all --mount type=bind,source="$(pwd)",target=/notebooks vaia-robustness
 ```
 
-This may take a while the first time you run it, as a lot of packages need to be installed and configured. When finished, a Jupyter server should be setup and available at [](), where you can view and/or run the code.
+This may take a while the first time you run it, as a lot of packages need to be installed and configured. When finished, a Jupyter server should be running where you can view and/or run the code.
 
 Note that [NVIDIA Docker](https://github.com/NVIDIA/nvidia-docker) is required along with a suitable GPU on your machine to run the code on the GPU. If you cannot run the GPU version, you can use these commands for the CPU-only version:
 
