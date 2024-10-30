@@ -681,7 +681,7 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 
 				<section>
 					<h4>ImageNet accuracy</h4>
-					
+
 					<img src="img/imagenet_chart.png">
 				</section>
 
@@ -903,13 +903,32 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 				</section>
 
 				<section>
-					<h4>Invariance vs sensitivity</h4>
+					<h4>Instability in medical imaging</h4>
+
+					<img src="img/mri.png" height="500">
+
+					<p><a href="https://arxiv.org/abs/2001.01258">Gottschling et al. (2020)</a></p>
+				</section>
+
+				<section>
+					<h4>Instability in medical imaging</h4>
 
 					<p>
-						<img src="img/jacobsen.png">
+						No free lunch theorems:
+						<ul>
+							<li class="fragment">Higher performance implies higher risk of hallucinating small details</li>
+							<li class="fragment">Accuracy-stability trade-off</li>
+							<li class="fragment">Instabilities and hallucinations are not rare</li>
+						</ul>
 					</p>
+				</section>
 
-					<p><a href="https://arxiv.org/abs/1811.00401">Jacobsen et al. (2019)</a></p>
+				<section>
+					<h4>Instability in medical imaging</h4>
+
+					<img src="img/mri2.png" height="500">
+
+					<p><a href="https://www.pnas.org/doi/10.1073/pnas.1907377117">Antun et al. (2020)</a></p>
 				</section>
 
 				<section>
@@ -1008,7 +1027,7 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 					<ul>
 						<li><a href="https://adversarial-ml-tutorial.org/">Adversarial ML tutorial</a></li>
 						<li><a href="https://nicholas.carlini.com/">Nicholas Carlini's blog</a></li>
-						<li><a href="http://madry-lab.ml/">Madry Lab</a></li>
+						<li><a href="https://madrylab.mit.edu/">Madry Lab</a></li>
 					</ul>
 				</section>
 
@@ -1016,21 +1035,12 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 					<h4>Frameworks</h4>
 
 					<ul>
+						<li><a href="https://robustbench.github.io">RobustBench</a></li>
 						<li><a href="https://adversarial-robustness-toolbox.org/">Adversarial robustness toolbox</a></li>
 						<li><a href="https://github.com/fra31/auto-attack">AutoAttack</a></li>
 						<li><a href="https://foolbox.readthedocs.io/en/stable/">Foolbox</a></li>
 						<li><a href="https://github.com/tensorflow/cleverhans">CleverHans</a></li>
 						<li><a href="https://github.com/thu-ml/ares">ARES</a></li>
-					</ul>
-				</section>
-
-				<section>
-					<h4>Benchmarks</h4>
-
-					<ul>
-						<li><a href="https://robustbench.github.io">RobustBench</a></li>
-						<li><a href="http://robust.art/">RobustART</a></li>
-						<li><a href="https://ml.cs.tsinghua.edu.cn/ares-bench/#/leaderboard">ARES-Bench</a></li>
 					</ul>
 				</section>
 
