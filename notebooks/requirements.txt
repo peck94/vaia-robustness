@@ -10,3 +10,4 @@ git+https://github.com/RobustBench/robustbench.git
 jupyter
 jupyterlab
 ipywidgets
+tabulate
