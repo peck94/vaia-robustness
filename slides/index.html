@@ -25,7 +25,7 @@
 
 					<div style="width: 100%">
 						<div style="float: left; width: 50%">
-							<p><img src="img/pfp.jpg"></p>
+							<p><img src="img/pfp.jpg" height="400"></p>
 							<p style="font-family: monospace; font-size: 15pt">jonathan.peck@ugent.be</p>
 							<p style="font-family: monospace; font-size: 15pt"><a href="https://pecky.be/" target="_blank">pecky.be</a></p>
 						</div>
@@ -37,6 +37,10 @@
 							<p class="fragment"><a href="https://saeyslab.sites.vib.be/en">Saeys Lab</a> @ IRC</p>
 						</div>
 					</div>
+				</section>
+
+				<section>
+					<img src="img/paper.png">
 				</section>
 
 				<section>
@@ -380,6 +384,14 @@
 				</section>
 
 				<section>
+					<h4>Universal trigger phrases</h4>
+
+					<img src="img/chatgpt_large_clipped.jpeg" height="400">
+
+					<p><a href="https://arxiv.org/abs/2307.15043">Zou et al. (2023)</a></p>
+				</section>
+
+				<section>
 					<h4>ChatGPT version 2023-01-09</h4>
 
 					<table>
@@ -542,31 +554,16 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 				</section>
 
 				<section>
-					<h4>Fast adversarial training</h4>
+					<h4>Bag of tricks for adversarial training</h4>
 
-					<p>PGD-based adversarial training is extremely slow</p>
-					<p class="fragment">FGS-based adversarial training doesn't work (<a href="https://arxiv.org/pdf/1611.01236.pdf">Kurakin et al. 2016</a>)</p>
-					<p class="fragment">... or does it?</p>
-				</section>
+					<a href="https://arxiv.org/pdf/2010.00467">Pang et al. (2021)</a>:
+					<ul>
+						<li class="fragment">Early stopping on robust validation loss</li>
+						<li class="fragment">Weight decay</li>
+						<li class="fragment">Moderate label smoothing</li>
+					</ul>
 
-				<section>
-					<h4>Fast adversarial training</h4>
-
-					<p>FGS-based adversarial training can work if implemented carefully (<a href="https://arxiv.org/pdf/2001.03994.pdf">Wong et al. 2020</a>)</p>
-				</section>
-
-				<section>
-					<h4>Fast adversarial training</h4>
-
-					<p>
-						Two modifications of FGS:
-						<ol>
-							<li class="fragment">apply random noise to the initial input</li>
-							<li class="fragment">use $1.25\varepsilon$ as the step size instead of $\varepsilon$</li>
-						</ol>
-					</p>
-
-					<p class="fragment">Results are competitive with PGD but just as fast as regular training!</p>
+					<p class="fragment">Generative models heavily used for data augmentation (<a href="https://proceedings.mlr.press/v202/wang23ad/wang23ad.pdf">Wang et al. 2023</a>)</p>
 				</section>
 
 				<section>
@@ -613,14 +610,6 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 				</section>
 
 				<section>
-					<h4>De-randomized smoothing</h4>
-
-					<img src="img/derandomized_smoothing.png">
-
-					<p><a href="https://proceedings.neurips.cc/paper/2020/file/47ce0875420b2dbacfc5535f94e68433-Paper.pdf">Levine &amp; Feizi (2020)</a></p>
-				</section>
-
-				<section>
 					<h4>Combination therapies</h4>
 
 					<p>Modern defenses usually combine adversarial training with other tricks</p>
@@ -663,8 +652,8 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 							</tr>
 							<tr>
 								<td>$L_{\infty} \leq 8/255$</td>
-								<td>93.25%</td>
-								<td>70.69%</td>
+								<td>93.68%</td>
+								<td>73.71%</td>
 							</tr>
 							<tr>
 								<td>CIFAR-100</td>
@@ -676,14 +665,24 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 							<tr>
 								<td>ImageNet</td>
 								<td>$L_{\infty} \leq 4/255$</td>
-								<td>73.76%</td>
-								<td>47.60%</td>
-								<td>91.10%</td>
+								<td>77.96%</td>
+								<td>59.64%</td>
+								<td>92.40%</td>
 							</tr>
 						</table>
 					</p>
 
-					<p><a href="https://github.com/RobustBench/robustbench">RobustBench leaderboard</a></p>
+					<p>
+						<a href="https://github.com/RobustBench/robustbench">RobustBench leaderboard</a>
+						&amp;
+						<a href="https://paperswithcode.com/datasets">PapersWithCode</a>
+					</p>
+				</section>
+
+				<section>
+					<h4>ImageNet accuracy</h4>
+
+					<img src="img/imagenet_chart.png">
 				</section>
 
 				<section>
@@ -904,13 +903,32 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 				</section>
 
 				<section>
-					<h4>Invariance vs sensitivity</h4>
+					<h4>Instability in medical imaging</h4>
+
+					<img src="img/mri.png" height="500">
+
+					<p><a href="https://arxiv.org/abs/2001.01258">Gottschling et al. (2020)</a></p>
+				</section>
+
+				<section>
+					<h4>Instability in medical imaging</h4>
 
 					<p>
-						<img src="img/jacobsen.png">
+						No free lunch theorems:
+						<ul>
+							<li class="fragment">Higher performance implies higher risk of hallucinating small details</li>
+							<li class="fragment">Accuracy-stability trade-off</li>
+							<li class="fragment">Instabilities and hallucinations are not rare</li>
+						</ul>
 					</p>
+				</section>
 
-					<p><a href="https://arxiv.org/abs/1811.00401">Jacobsen et al. (2019)</a></p>
+				<section>
+					<h4>Instability in medical imaging</h4>
+
+					<img src="img/mri2.png" height="500">
+
+					<p><a href="https://www.pnas.org/doi/10.1073/pnas.1907377117">Antun et al. (2020)</a></p>
 				</section>
 
 				<section>
@@ -1009,7 +1027,7 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 					<ul>
 						<li><a href="https://adversarial-ml-tutorial.org/">Adversarial ML tutorial</a></li>
 						<li><a href="https://nicholas.carlini.com/">Nicholas Carlini's blog</a></li>
-						<li><a href="http://madry-lab.ml/">Madry Lab</a></li>
+						<li><a href="https://madrylab.mit.edu/">Madry Lab</a></li>
 					</ul>
 				</section>
 
@@ -1017,21 +1035,12 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 					<h4>Frameworks</h4>
 
 					<ul>
+						<li><a href="https://robustbench.github.io">RobustBench</a></li>
 						<li><a href="https://adversarial-robustness-toolbox.org/">Adversarial robustness toolbox</a></li>
 						<li><a href="https://github.com/fra31/auto-attack">AutoAttack</a></li>
 						<li><a href="https://foolbox.readthedocs.io/en/stable/">Foolbox</a></li>
 						<li><a href="https://github.com/tensorflow/cleverhans">CleverHans</a></li>
 						<li><a href="https://github.com/thu-ml/ares">ARES</a></li>
-					</ul>
-				</section>
-
-				<section>
-					<h4>Benchmarks</h4>
-
-					<ul>
-						<li><a href="https://robustbench.github.io">RobustBench</a></li>
-						<li><a href="http://robust.art/">RobustART</a></li>
-						<li><a href="https://ml.cs.tsinghua.edu.cn/ares-bench/#/leaderboard">ARES-Bench</a></li>
 					</ul>
 				</section>
 
