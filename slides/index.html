@@ -748,11 +748,22 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 					</p>
 
 					<p class="fragment">
-						Obviously useful for robustness, so much research interest
+						Obviously useful for robustness, so much research interest (<a href="https://proceedings.neurips.cc/paper_files/paper/2022/file/7b04ec5f2b89d7f601382c422dfe07af-Paper-Conference.pdf">Zhang et al. (2022)</a>)
 					</p>
 
 					<p class="fragment">
 						Lipschitz constraint is very restrictive, however...
+					</p>
+				</section>
+
+				<section>
+					<h4>Lipschitz networks</h4>
+
+					<p>
+						Bound the local Lipschitz constant instead:
+						$$
+							K_x = \sup_{x' \in B_\varepsilon(x)}~\frac{d(f(x), f(x'))}{d(x, x')}
+						$$
 					</p>
 				</section>
 
@@ -822,12 +833,6 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 					</p>
 
 					<p class="fragment">$x_2, \dots, x_{d+1} \sim \mathcal{N}(\eta y, 1)$</p>
-				</section>
-
-				<section>
-					<h4>Robustness vs accuracy</h4>
-
-					<p>Basically, the label $y$ is $+1$ or $-1$ uniformly at random, $x_1$ is moderately correlated with $y$ (via $p$) and $x_2, \dots, x_{d+1}$ are weakly correlated with $y$ (for large $\eta$).</p>
 				</section>
 
 				<section>
@@ -940,19 +945,23 @@ So, we have a = 4x and b = x, which means that a/b = 4, and thus the square of 2
 						Major open problems:
 						<ul>
 							<li class="fragment">
-								Robustness to one threat model (e.g. $L_2$) does not transfer well to others (e.g. $L_{\infty}$)
+								Threat models are unrealistic
 							</li>
 
 							<li class="fragment">
-								Standard accuracy is often significantly lower than non-robust model
+								Standard accuracy of robust models lags behind SOTA
 							</li>
 
 							<li class="fragment">
-								Perturbation budgets are much smaller than we would like
+								Defenses are computationally expensive
 							</li>
 
 							<li class="fragment">
-								Difficult to move beyond the toy problem of small additive perturbations
+								Certified defenses lag behind empirical ones
+							</li>
+
+							<li class="fragment">
+								Existing benchmarks are too limited
 							</li>
 						</ul>
 					</p>
